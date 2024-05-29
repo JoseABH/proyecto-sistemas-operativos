@@ -7,11 +7,12 @@ import ChefPage from './pages/ChefPage'
 import WaiterPage from './pages/WaiterPage'
 import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
+import HomePage from './pages/HomePage'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <AdminPage />
+    element: <HomePage />
   },
   {
     path: 'admin',
