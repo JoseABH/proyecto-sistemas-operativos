@@ -5,7 +5,7 @@ const ChefPage = () => {
   return (
     <>
     <Navbar />
-    <div>ChefPage</div>
+    <div className=" min-h-screen">ChefPage</div>
     <Footer />
     </>
   )

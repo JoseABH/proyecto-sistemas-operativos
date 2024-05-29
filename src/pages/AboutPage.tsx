@@ -31,8 +31,6 @@ const AboutPage = () => {
               <p className="text-lg text-gray-700 leading-relaxed">● José Alberto Baltodano Hernández</p>
               <p className="text-lg text-gray-700 leading-relaxed">● José Pablo Suárez Gómez</p>
               <p className="text-lg text-gray-700 leading-relaxed">● Naila Torres Pérez</p>
-
-
             </div>
           </div>
         </div>

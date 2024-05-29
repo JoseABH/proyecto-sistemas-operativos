@@ -5,15 +5,15 @@ import { getMesas } from '../Services/Mesas';
 
 const useMesas = () => {
   const [mesas, setMesas] = useState<Mesas[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoading(false);
     const fetchMesas = async () => {
       const mesasData = await getMesas();
       setMesas(mesasData);
-      setLoading(false);
+      setLoading(true);
     };
-
     fetchMesas();
   }, []);
 

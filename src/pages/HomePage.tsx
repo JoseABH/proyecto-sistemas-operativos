@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <>
     <Navbar />
-    <div>Home</div>
+    <div className=" min-h-screen">Home</div>
     <Footer />
     </>
   )
