@@ -8,6 +8,7 @@ import WaiterPage from './pages/WaiterPage'
 import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
 import HomePage from './pages/HomePage'
+import MenuPage from './pages/MenuPage'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: '/about',
     element: <AboutPage />
+  },
+  {
+    path: '/Menu',
+    element: <MenuPage />
   },
   {
     path: '*',

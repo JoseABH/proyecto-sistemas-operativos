@@ -6,6 +6,7 @@ const HomePage = () => {
     <>
     <Navbar />
     <div className=" min-h-screen">Home</div>
+    
     <Footer />
     </>
   )
