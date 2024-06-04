@@ -1,6 +1,6 @@
 
 export interface Mesas {
-    id: string;
+    id: number;
     number: number;
     status: 'ocupada' | 'libre';
   }

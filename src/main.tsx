@@ -9,6 +9,10 @@ import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
 import HomePage from './pages/HomePage'
 import MenuPage from './pages/MenuPage'
+import OrderPage from './pages/OrderPage'
+import AddMenu from './pages/AddMenu'
+import AddMesa from './pages/AddMesa'
+
 
 const router = createBrowserRouter([
   {
@@ -26,6 +30,18 @@ const router = createBrowserRouter([
   {
     path: 'waiter',
     element: <WaiterPage />
+  },
+  {
+    path: "/Ordenar/:id",
+    element: <OrderPage/>
+  },
+  {
+    path: '//AddMesa',
+    element: <AddMesa />
+  },
+  {
+    path: '/AddMenu',
+    element: <AddMenu />
   },
   {
     path: '/about',

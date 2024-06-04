@@ -1,12 +1,18 @@
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
+import OrderListP from "../components/OrderListP"
 
 const ChefPage = () => {
   return (
     <>
-    <Navbar />
-    <div className=" min-h-screen">ChefPage</div>
+    <main className="bg-slate-600">
+      <Navbar />
+    <div className=" min-h-screen pt-20">
+      <OrderListP></OrderListP>
+    </div>
     <Footer />
+    </main>
+    
     </>
   )
 }
