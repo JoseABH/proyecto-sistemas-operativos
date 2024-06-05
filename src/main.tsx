@@ -2,13 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import AdminPage from './pages/AdminPage'
 import ChefPage from './pages/ChefPage'
 import WaiterPage from './pages/WaiterPage'
-import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
 import HomePage from './pages/HomePage'
-import MenuPage from './pages/MenuPage'
+import OrderPage from './pages/OrderPage'
 
 const router = createBrowserRouter([
   {
@@ -16,24 +14,16 @@ const router = createBrowserRouter([
     element: <HomePage />
   },
   {
-    path: 'admin',
-    element: <AdminPage />
-  },
-  {
-    path: 'chef',
+    path: '/chef',
     element: <ChefPage />
   },
   {
-    path: 'waiter',
+    path: '/waiter',
     element: <WaiterPage />
   },
   {
-    path: '/about',
-    element: <AboutPage />
-  },
-  {
-    path: '/Menu',
-    element: <MenuPage />
+    path: '/order/:id',
+    element: <OrderPage />
   },
   {
     path: '*',
