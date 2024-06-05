@@ -7,6 +7,6 @@ export const getMesas = (): Promise<Mesas[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mesasData);
-    }, 1000); // Simulamos un delay de 1 segundo
+    }, 500); // Simulamos un delay de 1 segundo
   });
 };
