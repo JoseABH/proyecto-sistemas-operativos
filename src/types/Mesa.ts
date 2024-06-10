@@ -1,7 +1,16 @@
 
 export interface Mesas {
     id: string;
-    number: number;
-    status: 'ocupada' | 'libre';
+    mesaId:number;
+  personas: number;
+    status: boolean;
+    statusPedido: number;
+    pedido: Pedido[];
+    createdAt: string;
   }
   
+  interface Pedido {
+    pedido: string;
+    cant: number;
+    precio: number;
+}

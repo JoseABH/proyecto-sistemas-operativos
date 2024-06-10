@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className="fixed w-full max-h-20 border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 ">
+    <nav className="fixed w-full max-h-20 border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 z-10 ">
     <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2">
-        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="/img/Logo.jpg" className="h-14 rounded " alt=" Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Restaurant UNA</span>
         </a>
@@ -27,6 +27,9 @@ const Navbar = () => {
             </li>
             <li>
             <Link to="/Waiter" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Meseros</Link>     
+            </li>
+            <li>
+            <Link to="/admin" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Admin</Link>     
             </li>
           </ul>
         </div>

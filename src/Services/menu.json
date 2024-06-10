@@ -35,6 +35,30 @@
       "name": "Sopa de Mariscos",
       "description": "Sopa caliente con una variedad de mariscos frescos.",
       "price": 12.99
+    },
+    {
+      "id": 19,
+      "name": "Pollo a la Parrilla",
+      "description": "Pechuga de pollo a la parrilla con guarnición de verduras.",
+      "price": 10.99
+    },
+    {
+      "id": 20,
+      "name": "Bistec con Papas",
+      "description": "Bistec jugoso con papas fritas y ensalada.",
+      "price": 14.99
+    },
+    {
+      "id": 21,
+      "name": "Paella",
+      "description": "Paella tradicional con mariscos, pollo y chorizo.",
+      "price": 13.99
+    },
+    {
+      "id": 22,
+      "name": "Raviolis de Espinaca",
+      "description": "Raviolis rellenos de espinaca y ricotta con salsa de tomate.",
+      "price": 11.99
     }
   ],
   "drinks": [
@@ -73,6 +97,30 @@
       "name": "Café Espresso",
       "description": "Café espresso fuerte y aromático.",
       "price": 2.00
+    },
+    {
+      "id": 23,
+      "name": "Mojito",
+      "description": "Cóctel refrescante de ron, menta, y lima.",
+      "price": 5.99
+    },
+    {
+      "id": 24,
+      "name": "Vino Tinto",
+      "description": "Copa de vino tinto de la casa.",
+      "price": 4.50
+    },
+    {
+      "id": 25,
+      "name": "Cerveza Artesanal",
+      "description": "Cerveza artesanal local.",
+      "price": 3.99
+    },
+    {
+      "id": 26,
+      "name": "Batido de Fresa",
+      "description": "Batido cremoso de fresa.",
+      "price": 3.99
     }
   ],
   "desserts": [
@@ -111,6 +159,239 @@
       "name": "Tarta de Manzana",
       "description": "Tarta de manzana con canela y una bola de helado de vainilla.",
       "price": 4.99
+    },
+    {
+      "id": 27,
+      "name": "Mousse de Limón",
+      "description": "Mousse ligero de limón con un toque de menta.",
+      "price": 4.75
+    },
+    {
+      "id": 28,
+      "name": "Crème Brûlée",
+      "description": "Postre francés de crema con una capa crujiente de caramelo.",
+      "price": 5.50
+    },
+    {
+      "id": 29,
+      "name": "Profiteroles",
+      "description": "Bolas de masa choux rellenas de crema y cubiertas con chocolate.",
+      "price": 5.25
+    },
+    {
+      "id": 30,
+      "name": "Tiramisu",
+      "description": "Postre italiano con capas de mascarpone, café y cacao.",
+      "price": 5.99
     }
   ]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[ 
+  
+
+  {
+    "mainCourses": [
+      {
+        "id": 1,
+        "name": "Hamburguesa Clásica",
+        "description": "Deliciosa hamburguesa con carne, lechuga, tomate y queso.",
+        "price": 9.99
+      },
+      {
+        "id": 2,
+        "name": "Ensalada César",
+        "description": "Ensalada fresca con lechuga, pollo a la parrilla, crutones y aderezo César.",
+        "price": 7.99
+      },
+      {
+        "id": 3,
+        "name": "Pizza Margarita",
+        "description": "Pizza tradicional con salsa de tomate, mozzarella y albahaca fresca.",
+        "price": 10.99
+      },
+      {
+        "id": 10,
+        "name": "Tacos de Pollo",
+        "description": "Tacos de pollo con cilantro, cebolla y salsa verde.",
+        "price": 8.99
+      },
+      {
+        "id": 11,
+        "name": "Pasta Alfredo",
+        "description": "Pasta fetuccini con salsa Alfredo y queso parmesano.",
+        "price": 11.99
+      },
+      {
+        "id": 12,
+        "name": "Sopa de Mariscos",
+        "description": "Sopa caliente con una variedad de mariscos frescos.",
+        "price": 12.99
+      },
+      {
+        "id": 19,
+        "name": "Pollo a la Parrilla",
+        "description": "Pechuga de pollo a la parrilla con guarnición de verduras.",
+        "price": 10.99
+      },
+      {
+        "id": 20,
+        "name": "Bistec con Papas",
+        "description": "Bistec jugoso con papas fritas y ensalada.",
+        "price": 14.99
+      },
+      {
+        "id": 21,
+        "name": "Paella",
+        "description": "Paella tradicional con mariscos, pollo y chorizo.",
+        "price": 13.99
+      },
+      {
+        "id": 22,
+        "name": "Raviolis de Espinaca",
+        "description": "Raviolis rellenos de espinaca y ricotta con salsa de tomate.",
+        "price": 11.99
+      }
+    ],
+    "drinks": [
+      {
+        "id": 4,
+        "name": "Coca-Cola",
+        "description": "Refresco carbonatado de cola.",
+        "price": 2.5
+      },
+      {
+        "id": 5,
+        "name": "Limonada",
+        "description": "Refrescante limonada casera.",
+        "price": 3
+      },
+      {
+        "id": 6,
+        "name": "Agua Mineral",
+        "description": "Agua mineral sin gas.",
+        "price": 1.5
+      },
+      {
+        "id": 13,
+        "name": "Té Helado",
+        "description": "Té helado con un toque de limón.",
+        "price": 2.75
+      },
+      {
+        "id": 14,
+        "name": "Jugo de Naranja",
+        "description": "Jugo de naranja recién exprimido.",
+        "price": 3.5
+      },
+      {
+        "id": 15,
+        "name": "Café Espresso",
+        "description": "Café espresso fuerte y aromático.",
+        "price": 2
+      },
+      {
+        "id": 23,
+        "name": "Mojito",
+        "description": "Cóctel refrescante de ron, menta, y lima.",
+        "price": 5.99
+      },
+      {
+        "id": 24,
+        "name": "Vino Tinto",
+        "description": "Copa de vino tinto de la casa.",
+        "price": 4.5
+      },
+      {
+        "id": 25,
+        "name": "Cerveza Artesanal",
+        "description": "Cerveza artesanal local.",
+        "price": 3.99
+      },
+      {
+        "id": 26,
+        "name": "Batido de Fresa",
+        "description": "Batido cremoso de fresa.",
+        "price": 3.99
+      }
+    ],
+    "desserts": [
+      {
+        "id": 7,
+        "name": "Pastel de Chocolate",
+        "description": "Delicioso pastel de chocolate con cobertura de crema.",
+        "price": 4.99
+      },
+      {
+        "id": 8,
+        "name": "Helado de Vainilla",
+        "description": "Helado cremoso de vainilla.",
+        "price": 3.5
+      },
+      {
+        "id": 9,
+        "name": "Flan de Caramelo",
+        "description": "Postre tradicional de flan con caramelo.",
+        "price": 3.99
+      },
+      {
+        "id": 16,
+        "name": "Cheesecake de Fresa",
+        "description": "Cheesecake cremoso con cobertura de fresas.",
+        "price": 5.99
+      },
+      {
+        "id": 17,
+        "name": "Brownie con Nueces",
+        "description": "Brownie de chocolate con trozos de nueces.",
+        "price": 4.5
+      },
+      {
+        "id": 18,
+        "name": "Tarta de Manzana",
+        "description": "Tarta de manzana con canela y una bola de helado de vainilla.",
+        "price": 4.99
+      },
+      {
+        "id": 27,
+        "name": "Mousse de Limón",
+        "description": "Mousse ligero de limón con un toque de menta.",
+        "price": 4.75
+      },
+      {
+        "id": 28,
+        "name": "Crème Brûlée",
+        "description": "Postre francés de crema con una capa crujiente de caramelo.",
+        "price": 5.5
+      },
+      {
+        "id": 29,
+        "name": "Profiteroles",
+        "description": "Bolas de masa choux rellenas de crema y cubiertas con chocolate.",
+        "price": 5.25
+      },
+      {
+        "id": 30,
+        "name": "Tiramisu",
+        "description": "Postre italiano con capas de mascarpone, café y cacao.",
+        "price": 5.99
+      }
+    ]
+  }
+]

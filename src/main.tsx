@@ -7,11 +7,26 @@ import WaiterPage from './pages/WaiterPage'
 import NotFoundPage from './pages/NotFoundPage'
 import HomePage from './pages/HomePage'
 import OrderPage from './pages/OrderPage'
+import AdminPage from './pages/AdminPage'
+import GestionMesa from './pages/GestionMesa'
+import GestionMenu from './pages/GestionMenu'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />
+  },
+  {
+    path: '/admin',
+    element: <AdminPage />
+  },
+  {
+    path: '/Gestion/Mesa',
+    element: <GestionMesa />
+  },
+  {
+    path: '/Gestion/Menu',
+    element: <GestionMenu />
   },
   {
     path: '/chef',
