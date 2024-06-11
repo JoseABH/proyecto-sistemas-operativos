@@ -7,6 +7,7 @@ import OrderList from "../components/OrderList";
 import MenuList from "../components/MenuList";
 import Navbar from "../components/ui/Navbar";
 import Footer from "../components/ui/Footer";
+import toast from "react-hot-toast";
 
 const OrderPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -104,6 +105,7 @@ const OrderPage = () => {
       // Limpiar el estado orderItems después de confirmar el pedido
       handleClearOrder();
       navigate('/waiter');
+      toast.success('Pedido confirmado exitosamente.')
     } catch (error) {
       console.error('Error al confirmar el pedido:', error);
     }

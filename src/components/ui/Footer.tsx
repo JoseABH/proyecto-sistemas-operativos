@@ -17,7 +17,7 @@ const Footer = () => {
                     <a href="#" className="hover:underline me-4 md:me-6">Privacy Policy</a>
                 </li>
                 <li>
-                    <a href="#" className="hover:underline me-4 md:me-6">Licensing</a>
+                    <a href="https://github.com/JosePabloSG/proyecto-sistemas-operativos" className="hover:underline me-4 md:me-6">Licensing</a>
                 </li>
                 <li>
                     <a href="#" className="hover:underline">Contact</a>

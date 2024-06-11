@@ -18,7 +18,7 @@ const CardMenuItem: React.FC<CardMenuItemProps> = ({ item, onAddToOrder }) => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
+    <div className="p-4 bg-white rounded-lg shadow-md transform transition-all duration-500 ease-in-out animate-slideInDown">
       <h4 className="text-lg font-bold">{item.name}</h4>
       <p className="text-sm text-gray-500">{item.description}</p>
       <p className="font-bold">${item.price.toFixed(2)}</p>

@@ -10,6 +10,7 @@ import OrderPage from './pages/OrderPage'
 import AdminPage from './pages/AdminPage'
 import GestionMesa from './pages/GestionMesa'
 import GestionMenu from './pages/GestionMenu'
+import { Toaster } from 'react-hot-toast'
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <Toaster
+  reverseOrder={false}
+ />
     <RouterProvider router={router} />
   </React.StrictMode>
 )

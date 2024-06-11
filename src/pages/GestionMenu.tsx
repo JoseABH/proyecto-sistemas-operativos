@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../components/ui/Navbar';
 import Footer from '../components/ui/Footer';
-
+import toast from 'react-hot-toast';
 interface MenuItem {
     id: number;
     name: string;
@@ -22,6 +22,8 @@ const MenuPage = () => {
     const [newItem, setNewItem] = useState<MenuItem>({ id: 0, name: '', description: '', price: 0, categoria: 'mainCourses' });
     const [itemType, setItemType] = useState<string>('mainCourses');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isConfirm, setisConfirm] = useState(false)
 
     // Función para obtener el menú desde la API
     const fetchMenu = () => {
@@ -54,15 +56,16 @@ const MenuPage = () => {
             },
             body: JSON.stringify(itemToAdd),
         })
-        .then(response => response.json())
-        .then(data => {
-            const updatedMenu = { ...menu };
-            updatedMenu[itemType as keyof Menu].push(data);
-            setMenu(updatedMenu);
-            setNewItem({ id: 0, name: '', description: '', price: 0, categoria: 'mainCourses' });
-            setIsModalOpen(false);
-        })
-        .catch(error => console.error('Error al agregar el ítem:', error));
+            .then(response => response.json())
+            .then(data => {
+                const updatedMenu = { ...menu };
+                updatedMenu[itemType as keyof Menu].push(data);
+                setMenu(updatedMenu);
+                setNewItem({ id: 0, name: '', description: '', price: 0, categoria: 'mainCourses' });
+                setIsModalOpen(false);
+                toast(`Agregado exitosamente: ${data.name} en la categoría ${data.categoria}`, { icon: '😋' });
+            })
+            .catch(error => console.error('Error al agregar el ítem:', error));
     };
 
     // Función para actualizar un ítem del menú
@@ -76,31 +79,35 @@ const MenuPage = () => {
             },
             body: JSON.stringify(editingItem),
         })
-        .then(response => response.json())
-        .then(data => {
-            const updatedMenu = { ...menu };
-            const index = updatedMenu[itemType as keyof Menu].findIndex(item => item.id === data.id);
-            if (index !== -1) {
-                updatedMenu[itemType as keyof Menu][index] = data;
-                setMenu(updatedMenu);
-            }
-            setEditingItem(null);
-            setIsModalOpen(false);
-        })
-        .catch(error => console.error('Error al actualizar el ítem:', error));
+            .then(response => response.json())
+            .then(data => {
+                const updatedMenu = { ...menu };
+                const index = updatedMenu[itemType as keyof Menu].findIndex(item => item.id === data.id);
+                if (index !== -1) {
+                    updatedMenu[itemType as keyof Menu][index] = data;
+                    setMenu(updatedMenu);
+                }
+                setEditingItem(null);
+                setIsModalOpen(false);
+                toast(`Actualizo exitosamente: ${data.name} en la categoría ${data.categoria}`, { icon: '😋' });
+            })
+            .catch(error => console.error('Error al actualizar el ítem:', error));
     };
 
     // Función para eliminar un ítem del menú
-    const handleDeleteItem = (id: number, type: keyof Menu) => {
+    const handleDeleteItem = (id: number, type: keyof Menu, itemName: string) => {
+
         fetch(`https://${import.meta.env.VITE_API_URL}.mockapi.io/api/Menu/${id}`, {
             method: 'DELETE',
         })
-        .then(() => {
-            const updatedMenu = { ...menu };
-            updatedMenu[type] = updatedMenu[type].filter(item => item.id !== id);
-            setMenu(updatedMenu);
-        })
-        .catch(error => console.error('Error al eliminar el ítem:', error));
+            .then(() => {
+                const updatedMenu = { ...menu };
+                updatedMenu[type] = updatedMenu[type].filter(item => item.id !== id);
+                setMenu(updatedMenu);
+                setIsDeleteModalOpen(false);
+                toast(`Ítem ${itemName} eliminado exitosamente`, { icon: '🗑️' });
+            })
+            .catch(error => console.error('Error al eliminar el ítem:', error));
     };
 
     // Obtener el menú al cargar el componente
@@ -126,151 +133,203 @@ const MenuPage = () => {
 
     return (
         <>
-            <Navbar />
-            <div className="p-8 pt-20 h-screen overflow-y-auto bg-slate-600">
-                <h1 className="text-2xl font-bold mb-4 text-white">Gestión del Menú</h1>
-                <button
-                    onClick={() => openModal()}
-                    className="bg-blue-500 text-white py-2 px-4 rounded mb-4"
-                >
-                    Agregar Ítem
-                </button>
+            <div className=' overflow-hidden'>
+                <Navbar />
+                <div className="p-8 pt-20 h-screen overflow-y-auto overflow-hidden bg-slate-600">
+                    <h1 className="text-2xl font-bold mb-4 text-white">Gestión del Menú</h1>
+                    <button
+                        onClick={() => openModal()}
+                        className="bg-blue-500 text-white py-2 px-4 rounded mb-4 animate-open-close"
+                    >
+                        Agregar Ítem
+                    </button>
 
-                {/* Aquí va la tabla del menú */}
-                {Object.keys(menu).map(type => (
-                   
-                    <div key={type}>
-                        <h2 className="text-xl font-bold mb-2 text-white">
-                            {type === 'mainCourses' ? 'Plato Principal' : type === 'drinks' ? 'Bebidas' : type === 'desserts' ? 'Postres' : ''}
-                        </h2>
+                    {/* Aquí va la tabla del menú */}
+                    {Object.keys(menu).map(type => (
 
-                        <table className="w-full border-collapse text-center bg-white mb-4">
-                            <thead>
-                                <tr>
-                                    <th className="border p-2">ID</th>
-                                    <th className="border p-2">Nombre</th>
-                                    <th className="border p-2">Descripción</th>
-                                    <th className="border p-2">Precio</th>
-                                    <th className="border p-2">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {(menu[type as keyof Menu] || []).map(item => (
-                                    <tr key={item.id}>
-                                        <td className="border p-2">{item.id}</td>
-                                        <td className="border p-2">{item.name}</td>
-                                        <td className="border p-2">{item.description}</td>
-                                        <td className="border p-2">{item.price}</td>
-                                        <td className="border p-2">
-                                            <button
-                                                onClick={() => openModal(item, type)}
-                                                className="bg-yellow-500 text-white py-1 px-2 rounded m-2"
-                                            >
-                                                Editar
-                                            </button>
-                                            <button
-                                                onClick={() => handleDeleteItem(item.id, type as keyof Menu)}
-                                                className="bg-red-500 text-white py-1 px-2 rounded m-2"
-                                            >
-                                                Eliminar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                ))}
-
-                {/* Modal de Agregar/Editar Ítem */}
-                {isModalOpen && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="bg-white p-6 rounded shadow-lg w-1/3">
-                            <h2 className="text-xl font-bold mb-4">
-                                {editingItem ? 'Editar Ítem' : 'Agregar Ítem'}
+                        <div key={type}>
+                            <h2 className="text-xl font-bold mb-2 text-white animate-open-close">
+                                {type === 'mainCourses' ? 'Plato Principal' : type === 'drinks' ? 'Bebidas' : type === 'desserts' ? 'Postres' : ''}
                             </h2>
-                            <div className="mb-4">
-                                <label className="font-bold">Tipo de Ítem</label>
-                                <select
-                                    value={itemType}
-                                    onChange={e => setItemType(e.target.value)}
-                                    className="border p-2 w-full"
-                                >
-                                    <option value="mainCourses">Plato Principal</option>
-                                    <option value="drinks">Bebida</option>
-                                    <option value="desserts">Postre</option>
-                                </select>
-                            </div>
-                            <div className="mb-4">
-                                <label className="font-bold">Nombre</label>
-                                <input
-                                    type="text"
-                                    placeholder="Nombre"
-                                    value={editingItem ? editingItem.name : newItem.name}
-                                    onChange={e => {
-                                        const value = e.target.value;
-                                        if (editingItem) {
-                                            setEditingItem({ ...editingItem, name: value });
-                                        } else {
-                                            setNewItem({ ...newItem, name: value });
-                                        }
-                                    }}
-                                    className="border p-2 w-full"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="font-bold">Descripción</label>
-                                <input
-                                    type="text"
-                                    placeholder="Descripción"
-                                    value={editingItem ? editingItem.description : newItem.description}
-                                    onChange={e => {
-                                        const value = e.target.value;
-                                        if (editingItem) {
-                                            setEditingItem({ ...editingItem, description: value });
-                                        } else {
-                                            setNewItem({ ...newItem, description: value });
-                                        }
-                                    }}
-                                    className="border p-2 w-full"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="font-bold">Precio</label>
-                                <input
-                                    type="number"
-                                    placeholder="Precio"
-                                    value={editingItem ? editingItem.price : newItem.price}
-                                    onChange={e => {
-                                        const value = parseFloat(e.target.value);
-                                        if (editingItem) {
-                                            setEditingItem({ ...editingItem, price: value });
-                                        } else {
-                                            setNewItem({ ...newItem, price: value });
-                                        }
-                                    }}
-                                    className="border p-2 w-full"
-                                />
-                            </div>
-                            <div className="flex justify-end">
-                                <button
-                                    onClick={closeModal}
-                                    className="bg-gray-500 text-white py-2 px-4 rounded mr-2"
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    onClick={editingItem ? handleUpdateItem : handleAddItem}
-                                    className="bg-blue-500 text-white py-2 px-4 rounded"
-                                >
-                                    {editingItem ? 'Actualizar' : 'Agregar'}
-                                </button>
+
+                            <table className="w-full border-collapse text-center bg-white mb-4 rounded-lg animate-open-close">
+                                <thead className=''>
+                                    <tr className=''>
+                                        <th className="p-2">ID</th>
+                                        <th className="border p-2">Nombre</th>
+                                        <th className="border p-2">Descripción</th>
+                                        <th className="border p-2">Precio</th>
+                                        <th className="p-2">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody className='rounded-lg"'>
+                                    {(menu[type as keyof Menu] || []).map(item => (
+                                        <tr key={item.id}>
+                                            <td className="border-t p-2">{item.id}</td>
+                                            <td className="border p-2">{item.name}</td>
+                                            <td className="border p-2">{item.description}</td>
+                                            <td className="border p-2">{item.price}</td>
+                                            <td className="border-t p-2">
+                                                <button
+                                                    onClick={() => openModal(item, type)}
+                                                    className="bg-yellow-500 text-white py-1 px-2 rounded m-2"
+                                                >
+                                                    Editar
+                                                </button>
+                                                <button
+                                                    onClick={() => setIsDeleteModalOpen(true)}
+                                                    className="bg-red-500 text-white py-1 px-2 rounded m-2"
+                                                >
+                                                    Eliminar
+                                                </button>
+                                                {isDeleteModalOpen && (
+                                                    <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
+                                                        <div className=" bg-white p-6 rounded shadow-lg w-1/3">
+                                                            <h2 className="text-xl font-bold mb-4">
+                                                                ¿Estás seguro de eliminar {item.name} del menu?
+                                                            </h2>
+                                                            <div className="flex justify-end">
+                                                                <button
+                                                                    onClick={() => setIsDeleteModalOpen(false)}
+                                                                    className="bg-gray-500 text-white py-2 px-4 rounded mr-2"
+                                                                >
+                                                                    Cancelar
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleDeleteItem(item.id, type as keyof Menu, item.name)}
+                                                                    className="bg-red-500 text-white py-2 px-4 rounded"
+                                                                >
+                                                                    Eliminar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                                }
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ))}
+
+                    {/* Modal de Agregar/Editar Ítem */}
+                    {isModalOpen && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                            <div className="bg-white p-6 rounded shadow-lg w-1/3">
+                                <h2 className="text-xl font-bold mb-4">
+                                    {editingItem ? 'Editar Ítem' : 'Agregar Ítem'}
+                                </h2>
+                                <div className="mb-4">
+                                    <label className="font-bold">Tipo de Ítem</label>
+                                    <select
+                                        value={itemType}
+                                        onChange={e => setItemType(e.target.value)}
+                                        className="border p-2 w-full"
+                                    >
+                                        <option value="mainCourses">Plato Principal</option>
+                                        <option value="drinks">Bebida</option>
+                                        <option value="desserts">Postre</option>
+                                    </select>
+                                </div>
+                                <div className="mb-4">
+                                    <label className="font-bold">Nombre</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Nombre"
+                                        value={editingItem ? editingItem.name : newItem.name}
+                                        onChange={e => {
+                                            const value = e.target.value;
+                                            if (editingItem) {
+                                                setEditingItem({ ...editingItem, name: value });
+                                            } else {
+                                                setNewItem({ ...newItem, name: value });
+                                            }
+                                        }}
+                                        className="border p-2 w-full"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="font-bold">Descripción</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Descripción"
+                                        value={editingItem ? editingItem.description : newItem.description}
+                                        onChange={e => {
+                                            const value = e.target.value;
+                                            if (editingItem) {
+                                                setEditingItem({ ...editingItem, description: value });
+                                            } else {
+                                                setNewItem({ ...newItem, description: value });
+                                            }
+                                        }}
+                                        className="border p-2 w-full"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="font-bold">Precio</label>
+                                    <input
+                                        type="number"
+                                        placeholder="Precio"
+                                        value={editingItem ? editingItem.price : newItem.price}
+                                        onChange={e => {
+                                            const value = parseFloat(e.target.value);
+                                            if (editingItem) {
+                                                setEditingItem({ ...editingItem, price: value });
+                                            } else {
+                                                setNewItem({ ...newItem, price: value });
+                                            }
+                                        }}
+                                        className="border p-2 w-full"
+                                    />
+                                </div>
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={closeModal}
+                                        className="bg-gray-500 text-white py-2 px-4 rounded mr-2"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        onClick={() => setisConfirm(true)}
+                                        className="bg-blue-500 text-white py-2 px-4 rounded"
+                                    >
+                                        {editingItem ? 'Actualizar' : 'Agregar'}
+                                    </button>
+                                    {
+                                        isConfirm && (
+                                            <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 ">
+                                                <div className=" bg-white p-6 rounded shadow-lg  w-1/3">
+                                                    <h2 className="text-xl font-bold mb-4">
+                                                        ¿Estás seguro de {editingItem ? 'actualizar' : 'agregar'} {editingItem ? editingItem.name : newItem.name} al menu?
+                                                    </h2>
+                                                    <div className="flex justify-end">
+                                                        <button
+                                                            onClick={() => setisConfirm(false)}
+                                                            className="bg-gray-500 text-white py-2 px-4 rounded mr-2"
+                                                        >
+                                                            Cancelar
+                                                        </button>
+                                                        <button
+                                                            onClick={editingItem ? handleUpdateItem : handleAddItem}
+                                                            className="bg-blue-500 text-white py-2 px-4 rounded"
+                                                        >
+                                                            Confirmar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
+                <Footer />
             </div>
-            <Footer />
         </>
     );
 };
