@@ -109,7 +109,7 @@ const ChefPage = () => {
                     lowestOrder.checkedItems[index] === 'preparando' ? 'bg-yellow-500' :
                       'bg-green-500'
                     }`}>
-                    <label className="flex items-center text-lg">
+                    <label className="flex items-center text-lg  ">
                       <button
                         onClick={() => handleButtonClick(index)}
                         className={`mr-2 px-2 py-1 rounded ${lowestOrder.checkedItems[index] === 'pendiente' ? 'bg-gray-300 text-gray-700' :
