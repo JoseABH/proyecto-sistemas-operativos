@@ -7,25 +7,23 @@ const ChefPage = () => {
   const [orders, setOrders] = useState<any[]>([]);
   const [lowestOrder, setLowestOrder] = useState<any | null>(null);
   const [allChecked, setAllChecked] = useState(false);
-
-  // Función para obtener los pedidos desde la API
+  const [undoIndex, setUndoIndex] = useState<number | null>(null);
+  
+ // Función para obtener los pedidos desde la API
   const fetchOrders = () => {
     fetch(`https://${import.meta.env.VITE_API_URL}.mockapi.io/api/Pedido`)
       .then(response => response.json())
       .then(data => {
-        // Filtrar los pedidos con statusPedido: 2
         const filteredOrders = data.filter((order: any) => order.statusPedido === 2);
-        // Ordenar los pedidos por createdAt en orden ascendente
         const sortedOrders = filteredOrders.sort((a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
         setOrders(sortedOrders);
         if (sortedOrders.length > 0) {
-          // Seleccionar el pedido con la hora de creación más antigua y añadir campo checked
           const initialOrder = {
             ...sortedOrders[0],
-            checkedItems: sortedOrders[0].pedido.map(() => 'pendiente') // Inicializar con estado 'pendiente'
+            checkedItems: sortedOrders[0].pedido.map(() => 'pendiente')
           };
           setLowestOrder(initialOrder);
-          setAllChecked(false); // Resetear la variable de todos los checkboxes marcados
+          setAllChecked(false);
         } else {
           setLowestOrder(null);
         }
@@ -35,13 +33,11 @@ const ChefPage = () => {
       });
   };
 
-  // Función para manejar el cambio de estado de los botones
   const handleButtonClick = (index: number) => {
     if (!lowestOrder) return;
     const updatedOrder = { ...lowestOrder };
     const currentState = updatedOrder.checkedItems[index];
 
-    // Si el estado actual es 'listo', no permitir cambios
     if (currentState === 'listo') return;
 
     if (currentState === 'pendiente') {
@@ -52,9 +48,26 @@ const ChefPage = () => {
 
     setLowestOrder(updatedOrder);
     setAllChecked(updatedOrder.checkedItems.every(item => item === 'listo'));
+    setUndoIndex(index);
+    
   };
 
-  // Función para actualizar el statusPedido de un pedido por ID
+  const handleUndo = (index: number) => {
+    if (!lowestOrder || index !== undoIndex) return;
+    const updatedOrder = { ...lowestOrder };
+    const currentState = updatedOrder.checkedItems[index];
+
+    if (currentState === 'listo') {
+      updatedOrder.checkedItems[index] = 'preparando';
+    } else if (currentState === 'preparando') {
+      updatedOrder.checkedItems[index] = 'pendiente';
+    }
+
+    setLowestOrder(updatedOrder);
+    setAllChecked(updatedOrder.checkedItems.every(item => item === 'listo'));
+    setUndoIndex(null);
+  };
+
   const handleUpdateOrderStatus = (id: string) => {
     fetch(`https://${import.meta.env.VITE_API_URL}.mockapi.io/api/Pedido/${id}`, {
       method: 'PUT',
@@ -67,7 +80,7 @@ const ChefPage = () => {
         if (response.ok) {
           console.log('Pedido actualizado exitosamente.');
           toast.success('El pedido de la mesa ha sido preparado.');
-          fetchOrders(); // Volver a obtener los pedidos después de actualizar
+          fetchOrders();
         } else {
           throw new Error('No se pudo actualizar el pedido.');
         }
@@ -77,7 +90,6 @@ const ChefPage = () => {
       });
   };
 
-  // Obtener los pedidos al cargar el componente
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -93,10 +105,11 @@ const ChefPage = () => {
             <ul className="list-none p-0 m-0 mb-4">
               {lowestOrder.pedido.map((item: any, index: number) => (
                 <li key={index} className="text-gray-700 mb-2 flex items-center">
-                  <div className={`p-1 mr-2  ${lowestOrder.checkedItems[index] === 'pendiente' ? 'bg-gray-300' :
+                  <div className={`p-1 mr-2 ${lowestOrder.checkedItems[index] === 'pendiente' ? 'bg-gray-300' :
                     lowestOrder.checkedItems[index] === 'preparando' ? 'bg-yellow-500' :
                       'bg-green-500'
-                    }`}> <label className="flex items-center text-lg">
+                    }`}>
+                    <label className="flex items-center text-lg">
                       <button
                         onClick={() => handleButtonClick(index)}
                         className={`mr-2 px-2 py-1 rounded ${lowestOrder.checkedItems[index] === 'pendiente' ? 'bg-gray-300 text-gray-700' :
@@ -104,13 +117,19 @@ const ChefPage = () => {
                             'bg-green-500 text-white'
                           }`}
                       >
-                        {lowestOrder.checkedItems[index] === 'pendiente' ? 'Preparar ' :
-                          lowestOrder.checkedItems[index] === 'preparando' ? 'Preparando ' :
+                        {lowestOrder.checkedItems[index] === 'pendiente' ? 'Preparar' :
+                          lowestOrder.checkedItems[index] === 'preparando' ? 'Preparando' :
                             'Listo'}
                       </button>
                       ● {item.pedido} - Cantidad: {item.cant}
-                    </label></div>
-
+                      <button
+                        className={`${undoIndex === index ? 'block' : 'hidden'} ml-4 bg-red-500 text-white py-1 px-2 rounded text-sm`}
+                        onClick={() => handleUndo(index)}
+                      >
+                        Deshacer
+                      </button>
+                    </label>
+                  </div>
                 </li>
               ))}
             </ul>
