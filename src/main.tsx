@@ -14,7 +14,7 @@ import { Toaster } from 'react-hot-toast'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/proyecto-sistemas-operativos/',
     element: <HomePage />
   },
   {
